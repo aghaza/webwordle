@@ -1,17 +1,75 @@
-function guardarSugerencia(sugerencia) {
-    fetch('https://hooks.zapier.com/hooks/catch/25466237/uzawpnb/', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ sugerencia: sugerencia }),
-    })
-    .then(response => {
-        if (response.ok) {
-            console.log('Sugerencia enviada');
-        }
-    })
-    .catch(error => {
-        console.error('Error al enviar la sugerencia:', error);
-    });
-}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WORDLE en Español</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="login-screen" class="screen">
+        <div class="login-container">
+            <h1>🎮 WORDLE</h1>
+            <p class="subtitle">Juego de palabras en español</p>
+            <div class="login-form">
+                <input type="text" id="username" placeholder="Nombre de usuario" autocomplete="off">
+                <input type="password" id="password" placeholder="Contraseña" autocomplete="off">
+                <button id="login-btn" onclick="login()">Entrar / Registrarse</button>
+                <p id="login-message" class="message"></p>
+            </div>
+        </div>
+    </div>
+
+    <div id="game-screen" class="screen hidden">
+        <div class="game-container">
+            <div class="header">
+                <h1>WORDLE</h1>
+                <div class="player-info">
+                    <span id="player-name"></span>
+                    <span id="player-level"></span>
+                    <button id="logout-btn" onclick="logout()">Salir</button>
+                </div>
+            </div>
+
+            <div class="stats-container">
+                <div class="stat">
+                    <span class="stat-label">Acertadas:</span>
+                    <span id="correct-count" class="stat-value">0</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Erradas:</span>
+                    <span id="wrong-count" class="stat-value">0</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Palabras restantes:</span>
+                    <span id="remaining-count" class="stat-value">0</span>
+                </div>
+            </div>
+
+            <div class="instructions">
+                <p><strong>Tenés <span id="attempts-left"></span> intentos</strong></p>
+                <p>🟢 Letra correcta en posición correcta</p>
+                <p>🟡 Letra correcta en posición incorrecta</p>
+                <p>⚪ Letra no está en la palabra</p>
+            </div>
+
+            <div id="game-board">
+            </div>
+
+            <div class="keyboard-container">
+                <input type="text" id="word-input" placeholder="Ingresá una palabra de 5 letras" maxlength="5" autocomplete="off">
+                <button id="submit-btn" onclick="submitGuess()">Enviar</button>
+            </div>
+
+            <div id="message" class="game-message"></div>
+
+            <div id="play-again" class="hidden">
+                <button onclick="startNewRound()">Jugar de nuevo</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="words.js"></script>
+    <script src="game.js"></script>
+</body>
+</html>
