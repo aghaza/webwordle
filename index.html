@@ -1,60 +1,17 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sugerencias de Palabras</title>
-    <style>
-        body { font-family: Arial, sans-serif; }
-        .resultado { margin-top: 20px; }
-        .error { color: red; }
-        .exito { color: green; }
-    </style>
-</head>
-<body>
-    <h1>Ingrese su sugerencia de palabra</h1>
-    <form id="sugerenciaForm">
-        <label for="sugerencia">Palabra a sugerir:</label>
-        <input type="text" id="sugerencia" required>
-        <input type="submit" value="Enviar">
-    </form>
-    <div class="resultado"></div>
-
-    <script>
-        const form = document.getElementById('sugerenciaForm');
-        const resultadoDiv = document.querySelector('.resultado');
-
-        form.onsubmit = function(event) {
-            event.preventDefault(); // Evita el envío del formulario
-
-            const sugerencia = document.getElementById('sugerencia').value.trim().toLowerCase();
-            const patron = /^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]{5}$/;
-
-            if (patron.test(sugerencia)) {
-                guardarSugerencia(sugerencia);
-                resultadoDiv.innerHTML = `<span class="exito">Palabra "${sugerencia}" agregada a la lista y guardada.</span>`;
-            } else {
-                resultadoDiv.innerHTML = '<span class="error">Palabra con caracteres no válidos o longitud incorrecta. Debe tener 5 caracteres.</span>';
-            }
-        };
-
-        function guardarSugerencia(sugerencia) {
-            fetch('https://hooks.zapier.com/hooks/catch/25466237/uzawpnb/', { // Reemplaza con tu URL real
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ sugerencia: sugerencia }), // Envía la sugerencia
-            })
-            .then(response => {
-                if (response.ok) {
-                    console.log('Sugerencia enviada');
-                }
-            })
-            .catch(error => {
-                console.error('Error al enviar la sugerencia:', error);
-            });
+function guardarSugerencia(sugerencia) {
+    fetch('https://hooks.zapier.com/hooks/catch/25466237/uzawpnb/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ sugerencia: sugerencia }),
+    })
+    .then(response => {
+        if (response.ok) {
+            console.log('Sugerencia enviada');
         }
-    </script>
-</body>
-</html>
+    })
+    .catch(error => {
+        console.error('Error al enviar la sugerencia:', error);
+    });
+}
