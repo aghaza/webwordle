@@ -236,7 +236,7 @@ function loseGame() {
     currentPlayer.level = calculateLevel();
     savePlayer();
 
-    showMessage(`🔥 CAGASTE FUEGO  🔥<br />La palabra era: ${secretWord.toUpperCase()}`, 'lose');
+    showMessage(`🔥 CAGASTE FUEGO  🔥 · La palabra era: ${secretWord.toUpperCase()}`, 'lose');
     document.getElementById('word-input').disabled = true;
     document.getElementById('submit-btn').disabled = true;
     document.getElementById('play-again').classList.remove('hidden');
