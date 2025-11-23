@@ -83,7 +83,7 @@ function calculateLevel() {
     const totalRemaining = currentPlayer.words.length;
 
     if (totalRemaining === 0 && totalWrong === 0) {
-        return 5;
+        return 4;
     }
 
     const totalPlayed = totalCorrect + totalWrong;
@@ -91,11 +91,11 @@ function calculateLevel() {
 
     const percentage = (totalCorrect / totalPlayed) * 100;
 
-    if (percentage >= 80) return 5;
-    if (percentage >= 60) return 4;
-    if (percentage >= 40) return 3;
-    if (percentage >= 20) return 2;
-    return 1;
+    if (percentage >= 80) return 4;
+    if (percentage >= 60) return 3;
+    if (percentage >= 40) return 2;
+    if (percentage >= 20) return 1;
+    return 0;
 }
 
 function startGame() {
