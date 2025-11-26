@@ -55,6 +55,8 @@ import subprocess
 import pickle
 import sys
 import ast
+from datetime import datetime
+
 
 # Nueva importación para descarga
 try:
@@ -163,12 +165,13 @@ def guardar():
         print(f"{rojo}No se ha podido generar <words.js> porque no se ha encontrado el conversor {bold}<bolsaPKL_to_wordsJS.py>.{reset}")
 
 def subir_a_github():
+    time = datetime.now().strftime("%d/%m/%y-%H:%M:%S")
     try:
         # Comando para añadir el archivo
         subprocess.run(['git', 'add', 'words.js'], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
 
         # Comando para hacer commit
-        subprocess.run(['git', 'commit', '-m', 'Actualización de words.js'], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
+        subprocess.run(['git', 'commit', '-m', f'auto: {time}'], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
 
         # Comando para hacer push
         subprocess.run(['git', 'push', 'origin', 'main'], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
@@ -238,7 +241,7 @@ def buscar():
         print(f'\n{cyan}La palabra{reset} {naranja}{texto}{reset} {cyan}ya está en la base de palabras.{reset}')
         eliminar(texto)
     elif texto == 'x':
-        salida()
+        listar()
     else:
         print(f'\nLa palabra {naranja}{texto}{reset} no está en la base de palabras.')
         agregar(texto)
@@ -253,14 +256,12 @@ def agregar(texto):
         nuevas += 1
         nuev.append(texto)
         guardar()
-        repetir()
+        buscar()
     elif opcion == 's' and len(texto) != 5:
         print(f'\n{rojo}La palabra solo puede tener 5 letras.{reset}\nPalabra {cyan}{texto} {reset}no agregada a la base. ')
-        repetir()
-    elif opcion == 'x':
-        salida()
+        buscar()
     elif opcion == 'n':
-        repetir()
+        buscar()
     elif texto == 'x':
         salida()     
     else:
@@ -277,26 +278,28 @@ def eliminar(texto):
         eliminadas += 1
         elim.append(texto)
         guardar()
-        repetir()
+        buscar()
     elif opcion == 'n':
-        repetir()
+        buscar()
     elif opcion == 'x':
         salida()
     else:
         print(f'\n{rojo}Ingrese solamente {bold}S{reset} {rojo} o {bold}N.{reset}')
         eliminar(texto)   
 
-def repetir():
-    otra = input(f'\n{verde}¿Buscar otra palabra?{reset} (S/N): ').strip().lower()
-    if otra == 's':
-        buscar()
-    elif otra == 'n':
-        listar()
-    elif otra == 'x':
-        salida()    
-    else:
-        print(f'\n{rojo}Ingrese solamente {bold}S{reset} {rojo} o {bold}N.{reset}')
-        repetir()
+# La función repetir() era parte de la imlementación original en donde
+# agregar() y eliminar() llamaban a reperir() ahora llaman a listar()
+# def repetir():
+#     otra = input(f'\n{verde}¿Buscar otra palabra?{reset} (S/N): ').strip().lower()
+#     if otra == 's':
+#         buscar()
+#     elif otra == 'n':
+#         listar()
+#     elif otra == 'x':
+#         salida()    
+#     else:
+#         print(f'\n{rojo}Ingrese solamente {bold}S{reset} {rojo} o {bold}N.{reset}')
+#         repetir()
 
 def listar():
     opcion = input('\n¿Listar todas las palabras disponibles? (S/N) ').strip().lower()
@@ -310,8 +313,6 @@ def listar():
     elif opcion == 'n':
         salida()
         guardar()
-    elif opcion == 'x':
-        salida()
     else:
         print(f'\n{rojo}Ingrese solamente {bold}S{reset} {rojo} o {bold}N.{reset}')
         listar()       
