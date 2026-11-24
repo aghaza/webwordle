@@ -1,3 +1,5 @@
+# webwordle — WORDLE para jugar online
+
 WORDLE para jugar online con usuarios y contraseñas.
 Lo desarrollé desde cero en python como ejercicio pero no lo sé implementar tal cual como lo hice para que se juegue en la web.
 Por eso convertí el original mediante replit y me dio este resultado que es estéticamente muy diferente
@@ -9,6 +11,12 @@ La versión para jugar desde el terminal está mucho mejor pero no tengo idea de
 Para jugar les dejo el enlace aquí:
 
 https://aghaza.github.io/webwordle/
+
+## Bolsa de palabras: fuente única
+
+**`words.js` es la única fuente de verdad de la bolsa**: 1012 palabras de 5 letras, sin repetidos, idéntica a la de [aghaza/wordle_py](https://github.com/aghaza/wordle_py) (la versión de terminal, escrita desde cero en Python).
+
+`bolsa.pkl` ya no se versiona en este repo: es un artefacto local derivado de `words.js` (se regenera con `wordsJS_to_pyPKL.py` del repo de terminal, copiando `words.js` a esa carpeta).
 
 y me pueden escribir a:
 
